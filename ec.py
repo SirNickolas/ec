@@ -172,15 +172,19 @@ STDLIB = {
 
 # TODO: Add caching.
 SYMBOL_MAPPING = { }
-ls = [ ]
-for header, symbols in STDLIB.items():
-    symbols = symbols.split()
-    ls += symbols
-    for sym in symbols:
-        SYMBOL_MAPPING[sym] = header
 
-rx = re.compile(r"^%s|\b(?:%s)\b" % (HEADER_TEMPLATE % r"(.*)", '|'.join(ls)), re.M)
-del ls, header, symbols, sym
+def _init_stdlib():
+    ls = [ ]
+    m = SYMBOL_MAPPING
+    for header, symbols in STDLIB.items():
+        symbols = symbols.split()
+        ls += symbols
+        for sym in symbols:
+            m[sym] = header
+
+    return re.compile(r"^%s|\b(?:%s)\b" % (HEADER_TEMPLATE % r"(.*)", '|'.join(ls)), re.M)
+
+RX = _init_stdlib()
 
 
 class Report:
@@ -305,8 +309,9 @@ def main():
             prev_pos = 0
             modified = [ ]
             at_the_top = False
-            for m in rx.finditer(contents):
-                h = SYMBOL_MAPPING.get(m.group())
+            sym_mapping = SYMBOL_MAPPING
+            for m in RX.finditer(contents):
+                h = sym_mapping.get(m.group())
                 if h is not None:
                     headers.add(h)
                 else:
@@ -326,8 +331,9 @@ def main():
                 with open(src, "w") as f:
                     if not at_the_top:
                         f.write(modified[0])
+                    template = HEADER_TEMPLATE
                     for h in sorted(headers):
-                        f.write(HEADER_TEMPLATE % h)
+                        f.write(template % h)
                     for chunk in itertools.islice(modified, not at_the_top, None):
                         f.write(chunk)
 
