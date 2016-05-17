@@ -90,9 +90,10 @@ STDLIB = {
         SEEK_END SEEK_SET FILE fpos_t
     """,
     "cstdlib": """
-        atof atoi atol strtod strtol strtoul rand srand calloc free malloc realloc abort atexit exit
-        getenv system bsearch qsort abs div labs ldiv mblen mbtowc wctomb mbstowcs wcstombs
-        EXIT_FAILURE EXIT_SUCCESS MB_CUR_MAX NULL RAND_MAX div_t ldiv_t size_t
+        atof atoi atol atoll strtod strtof strtol strtold strtoll strtoul strtoull rand srand calloc
+        free malloc realloc abort atexit exit getenv system bsearch qsort abs div labs ldiv llabs
+        lldiv mblen mbtowc wctomb mbstowcs wcstombs EXIT_FAILURE EXIT_SUCCESS MB_CUR_MAX NULL
+        RAND_MAX div_t ldiv_t lldiv_t size_t
     """,
     "cstring": """
         memcpy memmove strcpy strncpy strcat strncat memcmp strcmp strcoll strncmp strxfrm memchr
