@@ -369,7 +369,7 @@ def main():
             params = [COMPILER]
             params += shlex.split(COMMON_OPTIONS, comments=True)
             params += shlex.split(RELEASE_OPTIONS if args.release else DEBUG_OPTIONS, comments=True)
-            params += ["-o", binary, src]
+            params += ["-o", binary, os.path.relpath(src)]
             for user_defined in args.params:
                 params += shlex.split(user_defined, comments=True)
 
