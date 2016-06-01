@@ -15,8 +15,8 @@ import tempfile
 COMPILER = R"g++"
 
 COMMON_OPTIONS = """
-    -std=c++11 -Wall -Wextra -pedantic -Wformat=2 -Wfloat-equal -Wconversion -Wcast-qual
-    -Wcast-align -Wuseless-cast -Wlogical-op -Wredundant-decls
+    -Wall -Wextra -pedantic -Wformat=2 -Wfloat-equal -Wlogical-op -Wredundant-decls
+    -Wconversion -Wcast-qual -Wcast-align -Wuseless-cast
     -Wno-shadow -Wno-unused-result -Wno-unused-parameter -Wno-unused-local-typedefs -Wno-long-long
     -DLOCAL_PROJECT
 """
@@ -218,6 +218,10 @@ def main():
         parser.add_argument("-r", "--release", action="store_true", help="""
             compile in release mode
         """)
+        parser.add_argument("-3", "--cpp03",
+            action="store_const", dest="std", const="c++03", help="""
+            follow the C++03 language standard (default is C++11)
+        """)
         group = parser.add_mutually_exclusive_group()
         group.add_argument("-f", "--force", action="store_true", help="""
             recompile even if up-to-date
@@ -259,7 +263,7 @@ def main():
             additional arguments passed to the compiler
         """)
 
-        parser.set_defaults(report=Report.normal, verbosity=Verbosity.normal)
+        parser.set_defaults(std="c++11", report=Report.normal, verbosity=Verbosity.normal)
 
         if len(sys.argv) <= 1:
             parser.print_help()
@@ -369,6 +373,7 @@ def main():
             params = [COMPILER]
             params += shlex.split(COMMON_OPTIONS, comments=True)
             params += shlex.split(RELEASE_OPTIONS if args.release else DEBUG_OPTIONS, comments=True)
+            params += ["-std=%s" % args.std]
             params += ["-o", binary, os.path.relpath(src)]
             for user_defined in args.params:
                 params += shlex.split(user_defined, comments=True)

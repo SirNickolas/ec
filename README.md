@@ -3,7 +3,7 @@
 *easy_compile* is a [Python](https://python.org) script for compiling and running single source C++
 programs. It runs on Python from 2.6 to 3.5 and has no external dependencies.
 
-    usage: ec [-h] [-w] [-r] [-f | -C] [-H] [-c | -a | -n] [-v | -q] [-s] [-A PARAMS]
+    usage: ec [-h] [-w] [-r] [-3] [-f | -C] [-H] [-c | -a | -n] [-v | -q] [-s] [-A PARAMS]
               filename
 
     Compile & Run a single source file C++ program
@@ -15,6 +15,7 @@ programs. It runs on Python from 2.6 to 3.5 and has no external dependencies.
       -h, --help            show this help message and exit
       -w, --working         set the working directory to the source file directory
       -r, --release         compile in release mode
+      -3, --cpp03           follow the C++03 language standard (default is C++11)
       -f, --force           recompile even if up-to-date
       -C, --no-cache        do not use caching at all
       -H, --no-header       do not process headers
@@ -26,8 +27,8 @@ programs. It runs on Python from 2.6 to 3.5 and has no external dependencies.
       -s, --stay            wait for any key to be pressed at the end
       -A, --params PARAMS   additional arguments passed to the compiler
 
-    g++ / -std=c++11 -Wall -Wextra -pedantic -Wformat=2 -Wfloat-equal -Wconversion
-    -Wcast-qual -Wcast-align -Wuseless-cast -Wlogical-op -Wredundant-decls
+    g++ / -Wall -Wextra -pedantic -Wformat=2 -Wfloat-equal -Wlogical-op
+    -Wredundant-decls -Wconversion -Wcast-qual -Wcast-align -Wuseless-cast
     -Wno-shadow -Wno-unused-result -Wno-unused-parameter -Wno-unused-local-typedefs
     -Wno-long-long -DLOCAL_PROJECT / -g -DLOCAL_DEBUG -D_GLIBCXX_DEBUG
     -D_GLIBCXX_DEBUG_PEDANTIC / -O2
