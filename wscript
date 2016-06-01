@@ -22,7 +22,7 @@ def configure(cnf):
 def build(bld):
     bld(
         rule="${CYTHON} ${CYTHONFLAGS} -o ${TGT} ${SRC}",
-        source="ec.py",
+        source="src/ec.py",
         target="ec.c",
     )
 
