@@ -14,12 +14,39 @@ import tempfile
 
 COMPILER = R"g++"
 
-COMMON_OPTIONS = """
+COMMON_OPTIONS = r"""
     -Wall -Wextra -pedantic -Wformat=2 -Wfloat-equal -Wlogical-op -Wredundant-decls
     -Wconversion -Wcast-qual -Wcast-align -Wuseless-cast
     -Wno-shadow -Wno-unused-result -Wno-unused-parameter -Wno-unused-local-typedefs -Wno-long-long
     -DLOCAL_PROJECT
 """
+
+# COMPILER = R"clang++"
+
+# COMMON_OPTIONS = r"""
+#     -Weverything
+#     -Wno-c++98-compat-pedantic
+#     -Wno-missing-variable-declarations
+#     -Wno-missing-prototypes
+#     -Wno-padded
+#     -Wno-global-constructors
+#     -Wno-exit-time-destructors
+#     -Wno-old-style-cast
+#     -Wno-sign-conversion
+#     -Wno-shadow
+#     -Wno-gnu-statement-expression
+#     -Wno-gnu-label-as-value
+#     -Wno-dollar-in-identifier-extension
+#     -Wno-long-long
+#     -Wno-switch-enum
+#     -Wno-format-nonliteral
+#     -Wno-format-security
+#     -Wno-unused-parameter
+#     -Wno-unused-result
+#     -Wno-unused-macros
+#     -Wno-unused-local-typedefs
+#     -DLOCAL_PROJECT
+# """
 
 DEBUG_OPTIONS   = "-g -DLOCAL_DEBUG -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC"
 RELEASE_OPTIONS = "-O2"
