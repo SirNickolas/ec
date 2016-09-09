@@ -1,5 +1,5 @@
 APPNAME = "ec"
-VERSION = "1.1"
+VERSION = "1.2"
 
 
 def options(opt):
@@ -21,7 +21,7 @@ def configure(cnf):
 
 def build(bld):
     bld(
-        rule="${CYTHON} ${CYTHONFLAGS} -o ${TGT} ${SRC}",
+        rule='"${CYTHON}" ${CYTHONFLAGS} -o ${TGT} ${SRC}',
         source="src/ec.py",
         target="ec.c",
     )

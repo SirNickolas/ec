@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 
+#
+# This file is in the Public Domain.
+# SirNickolas, 2015
+#
+
 from __future__ import print_function
 
 import argparse
