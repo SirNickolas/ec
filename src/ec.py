@@ -29,6 +29,8 @@ COMMON_OPTIONS = r"""
 # COMPILER = R"clang++"
 
 # COMMON_OPTIONS = r"""
+#     -fno-elide-type
+#     -fdiagnostics-show-template-tree
 #     -Weverything
 #     -Wno-c++98-compat-pedantic
 #     -Wno-missing-variable-declarations
