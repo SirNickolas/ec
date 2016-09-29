@@ -462,7 +462,6 @@ def main():
                 sys.exit(1)
 
             if (ret != 0 and args.report != Report.never) or args.report == Report.always:
-                print()
                 print("Process terminated with code", ret)
 
             sys.exit(ret)
