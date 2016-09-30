@@ -12,6 +12,7 @@ import itertools
 import os
 import re
 import shlex
+import signal
 import subprocess
 import sys
 import tempfile
@@ -241,8 +242,21 @@ except NameError:
         pass
 
 
+def safe_call(*args, **kwargs):
+    try:
+        proc = subprocess.Popen(*args, **kwargs)
+        return proc.wait()
+    except:
+        try:
+            proc.kill()
+        except:
+            pass
+        raise
+
+
 def main():
     wait_for_keystroke = False
+    signal.signal(signal.SIGTERM, lambda signum, frame: sys.exit(-signum))
     try:
         parser = argparse.ArgumentParser(epilog=SUMMARY, description="""
             Compile & Run a single source file C++ program
@@ -417,18 +431,15 @@ def main():
                 sys.stdout.flush()
 
             try:
-                ret = subprocess.call(params)
+                ret = safe_call(params)
             except ProcessLookupError:
                 raise
             except OSError:
-                try:
-                    subprocess.check_call([COMPILER, "--version"])
-                except OSError:
-                    print("Cannot run a compiler: %r" % params, file=sys.stderr)
-                    wait_for_keystroke = args.stay
-                    sys.exit(1)
-                else:
+                if safe_call([COMPILER, "--version"]) == 0:
                     raise ProcessLookupError
+                print("Cannot run a compiler: %r" % params, file=sys.stderr)
+                wait_for_keystroke = args.stay
+                sys.exit(1)
 
             wait_for_keystroke = args.stay
             if ret != 0:
@@ -455,8 +466,11 @@ def main():
         if not args.compile_only:
             input_file = get_input(os.path.curdir, os.path.basename(src))
             try:
-                with open(input_file, "rb") as f:
-                    ret = subprocess.call(os.path.join(os.path.curdir, binary), stdin=f)
+                fd = os.open(input_file, os.O_RDONLY)
+                try:
+                    ret = safe_call(os.path.join(os.path.curdir, binary), stdin=fd)
+                finally:
+                    os.close(fd)
             except IOError:
                 print("Input file is not found: %r" % input_file, file=sys.stderr)
                 sys.exit(1)
