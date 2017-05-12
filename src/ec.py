@@ -2,7 +2,7 @@
 
 #
 # This file is in the Public Domain.
-# SirNickolas, 2015
+# SirNickolas, 2015-2017
 #
 
 from __future__ import print_function
@@ -37,6 +37,7 @@ COMMON_OPTIONS = r"""
 #     -Wno-missing-variable-declarations
 #     -Wno-missing-prototypes
 #     -Wno-padded
+#     -Wno-weak-vtables
 #     -Wno-global-constructors
 #     -Wno-exit-time-destructors
 #     -Wno-old-style-cast
@@ -126,8 +127,8 @@ STDLIB = {
     """,
     "cstdlib": """
         atof atoi atol atoll strtod strtof strtol strtold strtoll strtoul strtoull rand srand calloc
-        free malloc realloc abort atexit exit getenv system bsearch qsort abs div labs ldiv llabs
-        lldiv mblen mbtowc wctomb mbstowcs wcstombs EXIT_FAILURE EXIT_SUCCESS MB_CUR_MAX NULL
+        free malloc realloc abort atexit exit _Exit getenv system bsearch qsort abs div labs ldiv
+        llabs lldiv mblen mbtowc wctomb mbstowcs wcstombs EXIT_FAILURE EXIT_SUCCESS MB_CUR_MAX NULL
         RAND_MAX div_t ldiv_t lldiv_t size_t
     """,
     "cstring": """
